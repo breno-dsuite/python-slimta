@@ -111,6 +111,7 @@ def log_exception(name, **kwargs):
     if not value:
         return
     tb_repr = reprlib.Repr()
+    tb_repr.maxother = 10000
     tb_repr.maxstring = 10000
     logger = logging.getLogger(name)
     data = kwargs.copy()
@@ -124,7 +125,8 @@ def log_exception(name, **kwargs):
 
 
 log_repr = reprlib.Repr()
-log_repr.maxstring = 100
+log_repr.maxother = 1000
+log_repr.maxstring = 1000
 
 
 def logline(log, type, typeid, operation, **data):

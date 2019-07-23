@@ -233,7 +233,7 @@ def main():
     try:
         Event().wait()
     except KeyboardInterrupt:
-        print
+        print()
 
 
 if __name__ == '__main__':
