@@ -76,6 +76,8 @@ class IO(object):
                 pass
             except SSLWantReadError:
                 pass
+            except SSLError:
+                pass
             except socket_error as e:
                 if e.errno not in (0, EPIPE, ECONNRESET):
                     raise
