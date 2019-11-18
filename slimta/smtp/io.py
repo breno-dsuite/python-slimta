@@ -90,7 +90,7 @@ class IO(object):
             if e.errno == ECONNRESET:
                 raise ConnectionLost()
             raise
-        log.send(self.socket, data)
+        log.send(self.socket, data[:200])
 
     def raw_recv(self):
         try:
@@ -99,7 +99,7 @@ class IO(object):
             if e.errno == ECONNRESET:
                 raise ConnectionLost()
             raise
-        log.recv(self.socket, data)
+        log.recv(self.socket, data[:200])
         if data == b'':
             raise ConnectionLost()
         return data
