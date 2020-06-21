@@ -111,11 +111,11 @@ class AddReceivedHeader(QueuePolicy):
         parts.append(template.format(ehlo, host, ip))
 
     def _build_by_section(self, envelope, parts):
-        template = '\n        by {0} (slimta {1})'
-        parts.append(template.format(self.hostname, VERSION))
+        template = '\n        by {0}'
+        parts.append(template.format(self.hostname))
 
     def _build_with_section(self, envelope, parts):
-        template = ' with {0}'
+        template = 'with {0}'
         protocol = envelope.client.get('protocol', None)
         if protocol:
             parts.append(template.format(protocol))
@@ -135,7 +135,7 @@ class AddReceivedHeader(QueuePolicy):
         t = gmtime(envelope.timestamp)
         date = strftime(self.date_format, t)
 
-        data = ' '.join(parts) + ';\n       ' + date
+        data = ' '.join(parts) + ';\n        ' + date
 
         envelope.prepend_header('Received', data)
 
