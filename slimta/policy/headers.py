@@ -115,7 +115,7 @@ class AddReceivedHeader(QueuePolicy):
         parts.append(template.format(self.hostname, VERSION))
 
     def _build_with_section(self, envelope, parts):
-        template = '\n        with {0}'
+        template = ' with {0}'
         protocol = envelope.client.get('protocol', None)
         if protocol:
             parts.append(template.format(protocol))
@@ -135,7 +135,7 @@ class AddReceivedHeader(QueuePolicy):
         t = gmtime(envelope.timestamp)
         date = strftime(self.date_format, t)
 
-        data = ' '.join(parts) + '; ' + date
+        data = ' '.join(parts) + ';\n       ' + date
 
         envelope.prepend_header('Received', data)
 
