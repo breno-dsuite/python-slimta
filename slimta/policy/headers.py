@@ -99,7 +99,8 @@ class AddReceivedHeader(QueuePolicy):
 
     """
 
-    def __init__(self, date_format='%a, %d %b %Y %H:%M:%S +0000'):
+    def __init__(self, date_format='%a, %d %b %Y %H:%M:%S +0000', hostname=None):
+        self.hostname = hostname or socket.getfqdn()
         self.date_format = date_format
 
     def _build_from_section(self, envelope, parts):
@@ -110,17 +111,17 @@ class AddReceivedHeader(QueuePolicy):
         parts.append(template.format(ehlo, host, ip))
 
     def _build_by_section(self, envelope, parts):
-        template = 'by {0} (slimta {1})'
-        parts.append(template.format(envelope.receiver, VERSION))
+        template = '\n        by {0} (slimta {1})'
+        parts.append(template.format(self.hostname, VERSION))
 
     def _build_with_section(self, envelope, parts):
-        template = 'with {0}'
+        template = '\n        with {0}'
         protocol = envelope.client.get('protocol', None)
         if protocol:
             parts.append(template.format(protocol))
 
     def _build_for_section(self, envelope, parts):
-        template = 'for <{0}>'
+        template = '\n        for <{0}>'
         rcpts = '>,<'.join(envelope.recipients)
         parts.append(template.format(rcpts))
 
