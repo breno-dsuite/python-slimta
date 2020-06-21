@@ -111,7 +111,7 @@ class AddReceivedHeader(QueuePolicy):
         parts.append(template.format(ehlo, host, ip))
 
     def _build_by_section(self, envelope, parts):
-        template = '\n        by {0}'
+        template = '\n       by {0}'
         parts.append(template.format(self.hostname))
 
     def _build_with_section(self, envelope, parts):
@@ -121,7 +121,7 @@ class AddReceivedHeader(QueuePolicy):
             parts.append(template.format(protocol))
 
     def _build_for_section(self, envelope, parts):
-        template = '\n        for <{0}>'
+        template = '\n       for <{0}>'
         rcpts = '>,<'.join(envelope.recipients)
         parts.append(template.format(rcpts))
 
